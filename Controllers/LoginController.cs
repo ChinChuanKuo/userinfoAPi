@@ -9,8 +9,9 @@ namespace userinfoApi.Controllers
     [Route("[controller]")]
     public class LoginController : Controller
     {
-         [HttpPost]
-        public JsonResult checkUserData([FromBody] userData userData)
+        [HttpPost]
+        [Route("checkUserData")]
+        public JsonResult CheckUserData([FromBody] userData userData)
         {
             string clientip = Request.HttpContext.Connection.RemoteIpAddress.ToString().TrimEnd() == "::1" ? "127.0.0.1" : Request.HttpContext.Connection.RemoteIpAddress.ToString().TrimEnd();
             return Json(new LoginClass().GetUserModels(userData, clientip));

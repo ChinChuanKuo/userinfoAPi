@@ -10,7 +10,8 @@ namespace userinfoApi.Controllers
     public class SignupController : Controller
     {
         [HttpPost]
-        public JsonResult signupUserData([FromBody] signupData signupData)
+        [Route("signupUserData")]
+        public JsonResult SignupUserData([FromBody] signupData signupData)
         {
             string clientip = Request.HttpContext.Connection.RemoteIpAddress.ToString().TrimEnd() == "::1" ? "127.0.0.1" : Request.HttpContext.Connection.RemoteIpAddress.ToString().TrimEnd();
             return Json(new SignupClass().GetSignupUserModels(signupData, clientip));
