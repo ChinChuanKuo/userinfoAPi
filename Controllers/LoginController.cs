@@ -17,7 +17,8 @@ namespace userinfoApi.Controllers
         }
 
         [HttpPost]
-        public JsonResult loginUserData([FromBody] loginData loginData)
+        [Route("loginUserData")]
+        public JsonResult LoginUserData([FromBody] loginData loginData)
         {
             string clientip = Request.HttpContext.Connection.RemoteIpAddress.ToString().TrimEnd() == "::1" ? "127.0.0.1" : Request.HttpContext.Connection.RemoteIpAddress.ToString().TrimEnd(), userAgent = Request.Headers["user-Agent"].ToString().TrimEnd();
             return Json(new LoginClass().GetLoginModels(loginData, clientip, userAgent));
