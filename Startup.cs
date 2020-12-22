@@ -27,7 +27,6 @@ namespace userinfoApi
         {
             services.AddCors(options =>
             {
-                options.AddDefaultPolicy(builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
                 options.AddPolicy("Code",
                     builder => builder.AllowAnyOrigin().AllowAnyHeader().WithMethods("POST"));
                 options.AddPolicy("Forget",
@@ -37,6 +36,8 @@ namespace userinfoApi
                 options.AddPolicy("Resend",
                     builder => builder.AllowAnyOrigin().AllowAnyHeader().WithMethods("POST"));
                 options.AddPolicy("Signup",
+                    builder => builder.AllowAnyOrigin().AllowAnyHeader().WithMethods("POST"));
+                options.AddPolicy("Form",
                     builder => builder.AllowAnyOrigin().AllowAnyHeader().WithMethods("POST"));
             });
             services.AddControllers();

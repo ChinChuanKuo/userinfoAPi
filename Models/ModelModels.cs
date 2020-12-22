@@ -51,9 +51,29 @@ namespace userinfoApi.Models
         public string birthday { get; set; }
     }
 
+    public class itemsModels
+    {
+        [Required]
+        public bool showItem { get; set; }
+        [Required]
+        public List<Dictionary<string, object>> items { get; set; }
+    }
+
     public class statusModels
     {
         [Required]
         public string status { get; set; }
+    }
+
+    public class permissModels
+    {
+        [Required]
+        public bool insert { get; set; }
+        [Required]
+        public bool update { get; set; }
+        [Required]
+        public bool delete { get; set; }
+        [Required]
+        public bool export { get; set; }
     }
 }

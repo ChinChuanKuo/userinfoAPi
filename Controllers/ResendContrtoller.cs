@@ -11,7 +11,7 @@ namespace userinfoApi.Controllers
     {
         [HttpPost]
         [Route("resendUserData")]
-        public JsonResult ResendUserData([FromBody] otherData otherData)
+        public JsonResult resendUserData([FromBody] otherData otherData)
         {
             string clientip = Request.HttpContext.Connection.RemoteIpAddress.ToString().TrimEnd() == "::1" ? "127.0.0.1" : Request.HttpContext.Connection.RemoteIpAddress.ToString().TrimEnd();
             return Json(new ResendClass().GetResendUserModels(otherData, clientip));

@@ -11,7 +11,7 @@ namespace userinfoApi.Controllers
     {
         [HttpPost]
         [Route("codeUserData")]
-        public JsonResult CodeUserData([FromBody] otherData otherData)
+        public JsonResult codeUserData([FromBody] otherData otherData)
         {
             string clientip = Request.HttpContext.Connection.RemoteIpAddress.ToString().TrimEnd() == "::1" ? "127.0.0.1" : Request.HttpContext.Connection.RemoteIpAddress.ToString().TrimEnd();
             return Json(new CodeClass().GetCodeUserModels(otherData, clientip));
