@@ -17,7 +17,7 @@ namespace userinfoApi.App_Code
             ///users/chinchuankuo/documents/
             var configurationBuilder = new ConfigurationBuilder().SetBasePath(connectionSystem()).AddJsonFile("connection.json");
             IConfiguration config = configurationBuilder.Build();
-            return config["connectionStrings:" + sqlstring];
+            return config[$"connectionStrings:{sqlstring}"];
         }
         public string connectionSystem()
         {
