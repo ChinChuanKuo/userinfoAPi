@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using userinfoApi.App_Code;
 
 namespace userinfoApi
 {
@@ -26,7 +27,7 @@ namespace userinfoApi
                 options.AddPolicy("Forget",
                     builder => builder.AllowAnyOrigin().AllowAnyHeader().WithMethods("POST"));
                 options.AddPolicy("Login",
-                    builder => builder.WithOrigins("http://221.222.222.181:7250").AllowAnyHeader().WithMethods("POST"));
+                    builder => builder.WithOrigins(new corsorigins().connectionString()).AllowAnyHeader().WithMethods("POST"));
                 options.AddPolicy("Resend",
                     builder => builder.AllowAnyOrigin().AllowAnyHeader().WithMethods("POST"));
                 options.AddPolicy("Signup",
