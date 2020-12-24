@@ -9,23 +9,23 @@ namespace userinfoApi.App_Code
         public string connectionString()
         {
             var configurationBuilder = new ConfigurationBuilder().SetBasePath(new database().connectionSystem()).AddJsonFile("connectionApi.json");
-            var connection = configurationBuilder.Build().Get<configString>().connectionStrings;
-            int total = connection.Count - 1;
+            List<configitem> originitems = configurationBuilder.Build().Get<originString>().corsoriginStrings;
+            int total = originitems.Count - 1;
             List<string> items = new List<string>();
             while (total >= 0)
             {
-                items.Add(connection[total].ipconfig);
+                items.Add(originitems[total].ipconfig);
                 total--;
             }
             return String.Join(",", items);
         }
 
-        public class configString
+        public class originString
         {
-            public List<config> connectionStrings { get; set; }
+            public List<configitem> corsoriginStrings { get; set; }
         }
 
-        public class config
+        public class configitem
         {
             public string ipconfig { get; set; }
         }
