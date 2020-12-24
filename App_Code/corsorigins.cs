@@ -10,14 +10,14 @@ namespace userinfoApi.App_Code
         {
             var configurationBuilder = new ConfigurationBuilder().SetBasePath(new database().connectionSystem()).AddJsonFile("connectionApi.json");
             List<configitem> originitems = configurationBuilder.Build().Get<originString>().corsoriginStrings;
-            int total = originitems.Count - 1;
-            List<string> items = new List<string>();
-            while (total >= 0)
+            int i  = 0, total = originitems.Count;
+            string[] items = new string[total];
+            while (i < total)
             {
-                items.Add(originitems[total].ipconfig);
-                total--;
+                items[i] = originitems[i].ipconfig;
+                i++;
             }
-            return items.ToArray();
+            return items;
         }
 
         public class originString
