@@ -20,20 +20,22 @@ namespace userinfoApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            string[] items = new string[] { };
+            items = new corsorigins().connectionString();
             services.AddCors(options =>
             {
                 options.AddPolicy("Code",
-                    builder => builder.AllowAnyOrigin().AllowAnyHeader().WithMethods("POST"));
+                    builder => builder.WithOrigins(items[0], items[1], items[2], items[3], items[4]).AllowAnyHeader().WithMethods("POST"));
                 options.AddPolicy("Forget",
-                    builder => builder.AllowAnyOrigin().AllowAnyHeader().WithMethods("POST"));
+                    builder => builder.WithOrigins(items[0], items[1], items[2], items[3], items[4]).AllowAnyHeader().WithMethods("POST"));
                 options.AddPolicy("Login",
-                    builder => builder.WithOrigins("http://221.222.222.181:7250", "http://localhost:5000").AllowAnyHeader().WithMethods("POST"));
+                    builder => builder.WithOrigins(items[0], items[1], items[2], items[3], items[4]).AllowAnyHeader().WithMethods("POST"));
                 options.AddPolicy("Resend",
-                    builder => builder.AllowAnyOrigin().AllowAnyHeader().WithMethods("POST"));
+                    builder => builder.WithOrigins(items[0], items[1], items[2], items[3], items[4]).AllowAnyHeader().WithMethods("POST"));
                 options.AddPolicy("Signup",
-                    builder => builder.AllowAnyOrigin().AllowAnyHeader().WithMethods("POST"));
+                    builder => builder.WithOrigins(items[0], items[1], items[2], items[3], items[4]).AllowAnyHeader().WithMethods("POST"));
                 options.AddPolicy("Form",
-                    builder => builder.AllowAnyOrigin().AllowAnyHeader().WithMethods("POST"));
+                    builder => builder.WithOrigins(items[0], items[1], items[2], items[3], items[4]).AllowAnyHeader().WithMethods("POST"));
             });
             services.AddControllers();
         }

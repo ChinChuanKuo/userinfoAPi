@@ -6,7 +6,7 @@ namespace userinfoApi.App_Code
 {
     public class corsorigins
     {
-        public string connectionString()
+        public string[] connectionString()
         {
             var configurationBuilder = new ConfigurationBuilder().SetBasePath(new database().connectionSystem()).AddJsonFile("connectionApi.json");
             List<configitem> originitems = configurationBuilder.Build().Get<originString>().corsoriginStrings;
@@ -17,7 +17,7 @@ namespace userinfoApi.App_Code
                 items.Add(originitems[total].ipconfig);
                 total--;
             }
-            return String.Join(",", items);
+            return items.ToArray();
         }
 
         public class originString
