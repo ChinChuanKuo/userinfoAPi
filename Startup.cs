@@ -27,7 +27,7 @@ namespace userinfoApi
                 options.AddPolicy("Forget",
                     builder => builder.AllowAnyOrigin().AllowAnyHeader().WithMethods("POST"));
                 options.AddPolicy("Login",
-                    builder => builder.WithOrigins(new corsorigins().connectionString()).AllowAnyHeader().WithMethods("POST"));
+                    builder => builder.WithOrigins("http://221.222.222.181:7250", "http://localhost:5000").AllowAnyHeader().WithMethods("POST"));
                 options.AddPolicy("Resend",
                     builder => builder.AllowAnyOrigin().AllowAnyHeader().WithMethods("POST"));
                 options.AddPolicy("Signup",
