@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/chinchuankuo/Documents/core/userinfoApi/userinfoApi.csproj": {}
+    "/Users/chinchuankuo/Documents/coreApi/userinfoApi/userinfoApi.csproj": {}
   },
   "projects": {
-    "/Users/chinchuankuo/Documents/core/userinfoApi/userinfoApi.csproj": {
+    "/Users/chinchuankuo/Documents/coreApi/userinfoApi/userinfoApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/chinchuankuo/Documents/core/userinfoApi/userinfoApi.csproj",
+        "projectUniqueName": "/Users/chinchuankuo/Documents/coreApi/userinfoApi/userinfoApi.csproj",
         "projectName": "userinfoApi",
-        "projectPath": "/Users/chinchuankuo/Documents/core/userinfoApi/userinfoApi.csproj",
+        "projectPath": "/Users/chinchuankuo/Documents/coreApi/userinfoApi/userinfoApi.csproj",
         "packagesPath": "/Users/chinchuankuo/.nuget/packages/",
-        "outputPath": "/Users/chinchuankuo/Documents/core/userinfoApi/obj/",
+        "outputPath": "/Users/chinchuankuo/Documents/coreApi/userinfoApi/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/chinchuankuo/.nuget/NuGet/NuGet.Config"
@@ -56,6 +56,22 @@
               "target": "Package",
               "version": "[2.2.4, )"
             },
+            "Spire.Doc": {
+              "target": "Package",
+              "version": "[8.11.9, )"
+            },
+            "Spire.Pdf": {
+              "target": "Package",
+              "version": "[6.11.6, )"
+            },
+            "Spire.Presentation": {
+              "target": "Package",
+              "version": "[5.9.5, )"
+            },
+            "Spire.Xls": {
+              "target": "Package",
+              "version": "[10.11.2, )"
+            },
             "System.Data.SqlClient": {
               "target": "Package",
               "version": "[4.8.1, )"
@@ -79,7 +95,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/3.1.403/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/3.1.404/RuntimeIdentifierGraph.json"
         }
       }
     }

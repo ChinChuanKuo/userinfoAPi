@@ -25,7 +25,7 @@ namespace userinfoApi.Models
             dbparamlist.Add(new dbparam("@newid", otherData.userid.TrimEnd()));
             dbparamlist.Add(new dbparam("@vecode", otherData.values.TrimEnd()));
             dbparamlist.Add(new dbparam("@status", "1"));
-            userRows = database.checkSelectSql("mssql", "flyfnstring", "exec web.codesiteber @newid,@vecode,@status;", dbparamlist);
+            userRows = database.checkSelectSql("mssql", "sysstring", "exec web.codesiteber @newid,@vecode,@status;", dbparamlist);
             switch (userRows.Rows.Count)
             {
                 case 0:
@@ -37,7 +37,7 @@ namespace userinfoApi.Models
                     return new statusModels() { status = "islock" };
             }
             datetime datetime = new datetime();
-            string date = datetime.sqldate("mssql", "flyfnstring"), time = datetime.sqltime("mssql", "flyfnstring");
+            string date = datetime.sqldate("mssql", "sysstring"), time = datetime.sqltime("mssql", "sysstring");
             DateTime startdate = DateTime.Parse(date + " " + time);
             DateTime enddate = DateTime.Parse(userRows.Rows[0]["vedate"].ToString().TrimEnd() + " " + userRows.Rows[0]["vetime"].ToString().TrimEnd()).AddMinutes(10);
             if (enddate >= startdate)
@@ -49,7 +49,7 @@ namespace userinfoApi.Models
                 dbparamlist.Add(new dbparam("@modate", date));
                 dbparamlist.Add(new dbparam("@motime", time));
                 dbparamlist.Add(new dbparam("@newid", otherData.userid.TrimEnd()));
-                if (database.checkActiveSql("mssql", "flyfnstring", "update web.siteber set vedate = @vedate,vetime = @vetime,vecode = @vecode,modate = @modate,motime = @motime where newid = @newid;", dbparamlist) != "istrue")
+                if (database.checkActiveSql("mssql", "sysstring", "update web.siteber set vedate = @vedate,vetime = @vetime,vecode = @vecode,modate = @modate,motime = @motime where newid = @newid;", dbparamlist) != "istrue")
                 {
                     return new statusModels() { status = "error" };
                 }
@@ -64,7 +64,7 @@ namespace userinfoApi.Models
             dbparamlist.Add(new dbparam("@modate", date));
             dbparamlist.Add(new dbparam("@motime", time));
             dbparamlist.Add(new dbparam("@newid", otherData.userid.TrimEnd()));
-            if (database.checkActiveSql("mssql", "flyfnstring", "update web.siteber set vedate = @vedate,vetime = @vetime,vecode = @vecode,modate = @modate,motime = @motime where newid = @newid;", dbparamlist) != "istrue")
+            if (database.checkActiveSql("mssql", "sysstring", "update web.siteber set vedate = @vedate,vetime = @vetime,vecode = @vecode,modate = @modate,motime = @motime where newid = @newid;", dbparamlist) != "istrue")
             {
                 return new statusModels() { status = "error" };
             }

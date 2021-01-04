@@ -76,4 +76,52 @@ namespace userinfoApi.Models
         [Required]
         public bool export { get; set; }
     }
+
+    public class sSiteModels
+    {
+        [Required]
+        public bool images { get; set; }
+        [Required]
+        public bool videos { get; set; }
+        [Required]
+        public bool audios { get; set; }
+        [Required]
+        public string src { get; set; }
+        [Required]
+        public string imagePath { get; set; }
+        [Required]
+        public string original { get; set; }
+        [Required]
+        public string encryption { get; set; }
+        [Required]
+        public string extension { get; set; }
+        [Required]
+        public string date { get; set; }
+        [Required]
+        public string status { get; set; }
+    }
+
+    public class sRowsData
+    {
+        public string formId { get; set; }
+        public string value { get; set; }
+        public string newid { get; set; }
+    }
+
+    public class sFileData
+    {
+        public string imagePath { get; set; }
+        public string original { get; set; }
+        public string encryption { get; set; }
+        public string extension { get; set; }
+        public string newid { get; set; }
+    }
+
+    public class sDataModels
+    {
+        [Required]
+        public string value { get; set; }
+        [Required]
+        public string status { get; set; }
+    }
 }

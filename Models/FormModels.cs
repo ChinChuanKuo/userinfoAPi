@@ -18,7 +18,7 @@ namespace userinfoApi.Models
             List<dbparam> dbparamlist = new List<dbparam>();
             dbparamlist.Add(new dbparam("@newid", userData.userid.TrimEnd()));
             dbparamlist.Add(new dbparam("@status", "1"));
-            checkRows = new database().checkSelectSql("mssql", "flyfnstring", "exec web.checkformnewid @newid,@status;", dbparamlist);
+            checkRows = new database().checkSelectSql("mssql", "sysstring", "exec web.checkformnewid @newid,@status;", dbparamlist);
             switch (checkRows.Rows.Count)
             {
                 case 0:
@@ -45,7 +45,7 @@ namespace userinfoApi.Models
             dbparamlist.Add(new dbparam("@newid", userData.userid.TrimEnd()));
             dbparamlist.Add(new dbparam("@externip", cuurip));
             dbparamlist.Add(new dbparam("@status", "1"));
-            loginRows = database.checkSelectSql("mssql", "flyfnstring", "exec web.checkformlogin @newid,@externip,@status;", dbparamlist);
+            loginRows = database.checkSelectSql("mssql", "sysstring", "exec web.checkformlogin @newid,@externip,@status;", dbparamlist);
             switch (loginRows.Rows.Count)
             {
                 case 0:
@@ -55,13 +55,13 @@ namespace userinfoApi.Models
             {
                 datetime datetime = new datetime();
                 information information = new information();
-                string date = datetime.sqldate("mssql", "flyfnstring"), time = datetime.sqltime("mssql", "flyfnstring");
+                string date = datetime.sqldate("mssql", "sysstring"), time = datetime.sqltime("mssql", "sysstring");
                 dbparamlist.Add(new dbparam("@cpu", ""));
                 dbparamlist.Add(new dbparam("@os", information.osystem(userAgent)));
                 dbparamlist.Add(new dbparam("@internip", ""));
                 dbparamlist.Add(new dbparam("@indate", date));
                 dbparamlist.Add(new dbparam("@intime", time));
-                switch (database.checkActiveSql("mssql", "flyfnstring", "update web.sitelog set cpu = @cpu,os = @os,internip = @internip,indate = @indate,intime = @intime where newid = @newid and externip = @externip and islogin = @status;", dbparamlist))
+                switch (database.checkActiveSql("mssql", "sysstring", "update web.sitelog set cpu = @cpu,os = @os,internip = @internip,indate = @indate,intime = @intime where newid = @newid and externip = @externip and islogin = @status;", dbparamlist))
                 {
                     case "istrue":
                         return new loginModels() { newid = loginRows.Rows[0]["newid"].ToString().TrimEnd(), name = loginRows.Rows[0]["username"].ToString().TrimEnd().Substring(0, 1), allname = loginRows.Rows[0]["username"].ToString().TrimEnd(), status = "istrue" };
@@ -82,7 +82,7 @@ namespace userinfoApi.Models
             while (isbreak)
             {
                 Thread.Sleep(5000);
-                badge = database.checkSelectSql("mssql", "flyfnstring", "exec web.countnoticeform @newid,@status;", dbparamlist).Rows[0]["counts"].ToString().TrimEnd();
+                badge = database.checkSelectSql("mssql", "sysstring", "exec web.countnoticeform @newid,@status;", dbparamlist).Rows[0]["counts"].ToString().TrimEnd();
                 if (badge != otherData.values.TrimEnd())
                 {
                     isbreak = false;
@@ -96,7 +96,7 @@ namespace userinfoApi.Models
             DataTable mainRows = new DataTable();
             List<dbparam> dbparamlist = new List<dbparam>();
             dbparamlist.Add(new dbparam("@newid", userData.userid.TrimEnd()));
-            mainRows = new database().checkSelectSql("mssql", "flyfnstring", "exec web.searchallmissform @newid;", dbparamlist);
+            mainRows = new database().checkSelectSql("mssql", "sysstring", "exec web.searchallmissform @newid;", dbparamlist);
             switch (mainRows.Rows.Count)
             {
                 case 0:
@@ -110,7 +110,7 @@ namespace userinfoApi.Models
             DataTable mainRows = new DataTable();
             List<dbparam> dbparamlist = new List<dbparam>();
             dbparamlist.Add(new dbparam("@newid", userData.userid.TrimEnd()));
-            mainRows = new database().checkSelectSql("mssql", "flyfnstring", "exec web.searchrecordform @newid;", dbparamlist);
+            mainRows = new database().checkSelectSql("mssql", "sysstring", "exec web.searchrecordform @newid;", dbparamlist);
             switch (mainRows.Rows.Count)
             {
                 case 0:
@@ -130,7 +130,7 @@ namespace userinfoApi.Models
             DataTable mainRows = new DataTable();
             List<dbparam> dbparamlist = new List<dbparam>();
             dbparamlist.Add(new dbparam("@inoper", userData.userid.TrimEnd()));
-            mainRows = database.checkSelectSql("mssql", "flyfnstring", "exec web.updatenoticeform @inoper;", dbparamlist);
+            mainRows = database.checkSelectSql("mssql", "sysstring", "exec web.updatenoticeform @inoper;", dbparamlist);
             switch (mainRows.Rows.Count)
             {
                 case 0:

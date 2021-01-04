@@ -25,7 +25,7 @@ namespace userinfoApi.Models
             dbparamlist.Add(new dbparam("@newid", otherData.userid.TrimEnd()));
             dbparamlist.Add(new dbparam("@birthday", otherData.values.TrimEnd()));
             dbparamlist.Add(new dbparam("@status", "1"));
-            userRows = database.checkSelectSql("mssql", "flyfnstring", "exec web.forgetsiteber @newid,@birthday,@status;", dbparamlist);
+            userRows = database.checkSelectSql("mssql", "sysstring", "exec web.forgetsiteber @newid,@birthday,@status;", dbparamlist);
             switch (userRows.Rows.Count)
             {
                 case 0:
@@ -38,7 +38,7 @@ namespace userinfoApi.Models
             }
             Random random = new Random();
             datetime datetime = new datetime();
-            string vecode = random.Next(100000, 999999).ToString().TrimEnd(), date = datetime.sqldate("mssql", "flyfnstring"), time = datetime.sqltime("mssql", "flyfnstring");
+            string vecode = random.Next(100000, 999999).ToString().TrimEnd(), date = datetime.sqldate("mssql", "sysstring"), time = datetime.sqltime("mssql", "sysstring");
             dbparamlist.Clear();
             dbparamlist.Add(new dbparam("@vedate", date));
             dbparamlist.Add(new dbparam("@vetime", time));
@@ -46,7 +46,7 @@ namespace userinfoApi.Models
             dbparamlist.Add(new dbparam("@modate", date));
             dbparamlist.Add(new dbparam("@motime", time));
             dbparamlist.Add(new dbparam("@newid", otherData.userid.TrimEnd()));
-            if (database.checkActiveSql("mssql", "flyfnstring", "update web.siteber set vedate = @vedate,vetime = @vetime,vecode = @vecode,modate = @modate,motime = @motime where newid = @newid;", dbparamlist) != "istrue")
+            if (database.checkActiveSql("mssql", "sysstring", "update web.siteber set vedate = @vedate,vetime = @vetime,vecode = @vecode,modate = @modate,motime = @motime where newid = @newid;", dbparamlist) != "istrue")
             {
                 return new statusModels() { status = "error" };
             }

@@ -24,7 +24,7 @@ namespace userinfoApi.Models
             List<dbparam> dbparamlist = new List<dbparam>();
             dbparamlist.Add(new dbparam("@newid", otherData.userid.TrimEnd()));
             dbparamlist.Add(new dbparam("@status", "1"));
-            userRows = database.checkSelectSql("mssql", "flyfnstring", "exec web.resendsiteber @newid,@status;", dbparamlist);
+            userRows = database.checkSelectSql("mssql", "sysstring", "exec web.resendsiteber @newid,@status;", dbparamlist);
             switch (userRows.Rows.Count)
             {
                 case 0:
@@ -36,13 +36,13 @@ namespace userinfoApi.Models
                     return new statusModels() { status = "islock" };
             }
             datetime datetime = new datetime();
-            string date = datetime.sqldate("mssql", "flyfnstring"), time = datetime.sqltime("mssql", "flyfnstring");
+            string date = datetime.sqldate("mssql", "sysstring"), time = datetime.sqltime("mssql", "sysstring");
             dbparamlist.Clear();
             dbparamlist.Add(new dbparam("@password", new sha256().encry256(otherData.values.TrimEnd())));
             dbparamlist.Add(new dbparam("@modate", date));
             dbparamlist.Add(new dbparam("@motime", time));
             dbparamlist.Add(new dbparam("@newid", otherData.userid.TrimEnd()));
-            if (database.checkActiveSql("mssql", "flyfnstring", "update web.siteber set password = @password,modate = @modate,motime = @motime where newid = @newid;", dbparamlist) != "istrue")
+            if (database.checkActiveSql("mssql", "sysstring", "update web.siteber set password = @password,modate = @modate,motime = @motime where newid = @newid;", dbparamlist) != "istrue")
             {
                 return new statusModels() { status = "error" };
             }
