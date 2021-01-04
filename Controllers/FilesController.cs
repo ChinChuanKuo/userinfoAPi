@@ -32,10 +32,12 @@ namespace userinfoApi.Controllers
                 {
                     return Json(new sSiteModels() { status = "nodata" });
                 }
-                using (var fileStream = new FileStream($"{database.connectionString("folderFiles")}{original}({encryption}){extension}", FileMode.Create))
+                string filePath = $"{database.connectionString("sysFiles")}";
+                Directory.CreateDirectory(filePath);
+                using (var fileStream = new FileStream($"{filePath}{original}({encryption}){extension}", FileMode.Create))
                 {
                     await Request.Form.Files[0].CopyToAsync(fileStream);
-                    return Json(new sSiteModels() { images = mainRows.Rows[0]["flImages"].ToString().TrimEnd() == "1", videos = mainRows.Rows[0]["flVideos"].ToString().TrimEnd() == "1", audios = mainRows.Rows[0]["flAudios"].ToString().TrimEnd() == "1", src = mainRows.Rows[0]["flImages"].ToString().TrimEnd() == "1" && mainRows.Rows[0]["flShowed"].ToString().TrimEnd() == "0" ? $"{mainRows.Rows[0]["original"].ToString().TrimEnd()}({mainRows.Rows[0]["encryption"].ToString().TrimEnd()}){mainRows.Rows[0]["extension"].ToString().TrimEnd()}" : $"{original}({encryption}){extension}", imagePath = database.connectionString("folderHttps"), original = original, encryption = encryption, extension = extension, date = new datetime().sqldate("mssql", "sysstring"), status = "istrue" });
+                    return Json(new sSiteModels() { images = mainRows.Rows[0]["flImages"].ToString().TrimEnd() == "1", videos = mainRows.Rows[0]["flVideos"].ToString().TrimEnd() == "1", audios = mainRows.Rows[0]["flAudios"].ToString().TrimEnd() == "1", src = mainRows.Rows[0]["flImages"].ToString().TrimEnd() == "1" && mainRows.Rows[0]["flShowed"].ToString().TrimEnd() == "0" ? $"{mainRows.Rows[0]["original"].ToString().TrimEnd()}({mainRows.Rows[0]["encryption"].ToString().TrimEnd()}){mainRows.Rows[0]["extension"].ToString().TrimEnd()}" : $"{original}({encryption}){extension}", imagePath = $"{database.connectionString("sysHttps")}{mainRows.Rows[0]["formId"].ToString().TrimEnd()}/", original = original, encryption = encryption, extension = extension, date = new datetime().sqldate("mssql", "sysstring"), status = "istrue" });
                 }
             }
             return Json(new sSiteModels() { status = "nodata" });

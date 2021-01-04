@@ -24,11 +24,11 @@ namespace userinfoApi.Models
                 case 0:
                     return new sSiteModels() { status = "nodata" };
             }
-            string sysFile = $"{database.connectionString("sysFiles")}\\{mainRows.Rows[0]["formId"].ToString().TrimEnd()}\\";
-            Directory.CreateDirectory(sysFile);
+            string filePath = $"{database.connectionString("sysFiles")}{mainRows.Rows[0]["formId"].ToString().TrimEnd()}\\";
+            Directory.CreateDirectory(filePath);
             datetime datetime = new datetime();
             string stdate = datetime.sqldate("mssql", "sysstring"), sttime = datetime.sqltime("mssql", "sysstring"), cuname = Dns.GetHostEntry(cuurip).HostName.IndexOf('.') == -1 ? Dns.GetHostEntry(cuurip).HostName : Dns.GetHostEntry(cuurip).HostName.Split('.')[0], original = "", encryption = new sha256().new256("mssql", "sysstring"), extension = ".jpg";
-            new WebClient().DownloadFile(sRowsData.value.TrimEnd(), $"{sysFile}{original}({encryption}){extension}");
+            new WebClient().DownloadFile(sRowsData.value.TrimEnd(), $"{filePath}{original}({encryption}){extension}");
             dbparamlist.Clear();
             dbparamlist.Add(new dbparam("@formId", mainRows.Rows[0]["formId"].ToString().TrimEnd()));
             dbparamlist.Add(new dbparam("@siteId", sRowsData.formId.TrimEnd()));
@@ -43,7 +43,7 @@ namespace userinfoApi.Models
             {
                 return new sSiteModels() { status = "error" };
             }
-            switch (File.Exists($"{sysFile}{original}({encryption}){extension}"))
+            switch (File.Exists($"{filePath}{original}({encryption}){extension}"))
             {
                 case false:
                     return new sSiteModels() { status = "nodata" };
@@ -65,7 +65,7 @@ namespace userinfoApi.Models
             }
             datetime datetime = new datetime();
             string stdate = datetime.sqldate("mssql", "sysstring"), sttime = datetime.sqltime("mssql", "sysstring");
-            switch (File.Exists($"{database.connectionString("sysFiles")}\\{mainRows.Rows[0]["formId"].ToString().TrimEnd()}\\{sRowsData.value.TrimEnd()}"))
+            switch (File.Exists($"{database.connectionString("sysFiles")}{mainRows.Rows[0]["formId"].ToString().TrimEnd()}\\{sRowsData.value.TrimEnd()}"))
             {
                 case false:
                     return new statusModels() { status = "nodata" };
@@ -101,7 +101,7 @@ namespace userinfoApi.Models
                 case 0:
                     return new sSiteModels() { status = "nodata" };
             }
-            string filePath = $"{database.connectionString("sysFiles")}\\{mainRows.Rows[0]["formId"].ToString().TrimEnd()}\\", encryption = new sha256().new256("mssql", "sysstring"), extension = "pdf";
+            string filePath = $"{database.connectionString("sysFiles")}{mainRows.Rows[0]["formId"].ToString().TrimEnd()}\\", encryption = new sha256().new256("mssql", "sysstring"), extension = "pdf";
             switch (File.Exists($"{filePath}{sFileData.original.TrimEnd()}({sFileData.encryption.TrimEnd()}){sFileData.extension.TrimEnd()}"))
             {
                 case false:
