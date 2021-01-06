@@ -124,4 +124,11 @@ namespace userinfoApi.Models
         [Required]
         public string status { get; set; }
     }
+
+    public class iIconData
+    {
+        public List<Dictionary<string, object>> items { get; set; }
+        public List<Dictionary<string, object>> qaitems { get; set; }
+        public string newid { get; set; }
+    }
 }
