@@ -126,11 +126,10 @@ namespace userinfoApi.Models
 
         public itemsModels GetBadgeModels(userData userData, string cuurip)
         {
-            database database = new database();
             DataTable mainRows = new DataTable();
             List<dbparam> dbparamlist = new List<dbparam>();
             dbparamlist.Add(new dbparam("@inoper", userData.userid.TrimEnd()));
-            mainRows = database.checkSelectSql("mssql", "sysstring", "exec web.updatenoticeform @inoper;", dbparamlist);
+            mainRows = new database().checkSelectSql("mssql", "sysstring", "exec web.modifynoticeform @inoper;", dbparamlist);
             switch (mainRows.Rows.Count)
             {
                 case 0:
