@@ -71,7 +71,7 @@ namespace userinfoApi.Models
                     dbparamlist.Add(new dbparam("@hostname", cuname));
                     dbparamlist.Add(new dbparam("@browser", information.browser(userAgent)));
                     dbparamlist.Add(new dbparam("@os", information.osystem(userAgent)));
-                    subRows = database.checkSelectSql("mssql", "sysstring", "exec web.checksitelog @userid,@password,@externip,@status;", dbparamlist);
+                    subRows = database.checkSelectSql("mssql", "sysstring", "exec web.checksitelog @newid,@externip,@longitude,@latitude,@hostname,@browser,@os;", dbparamlist);
                     switch (subRows.Rows.Count)
                     {
                         case 0:
