@@ -45,64 +45,37 @@ namespace userinfoApi.Models
                 case true:
                     return new loginModels() { status = "errorPassword" };
             }
-            DataTable userRows = new DataTable();
             database database = new database();
+            DataTable mainRows = new DataTable();
             List<dbparam> dbparamlist = new List<dbparam>();
             dbparamlist.Add(new dbparam("@userid", loginData.userid.TrimEnd()));
             dbparamlist.Add(new dbparam("@password", new sha256().encry256(loginData.password.TrimEnd())));
             dbparamlist.Add(new dbparam("@status", "1"));
-            userRows = database.checkSelectSql("mssql", "sysstring", "exec web.loginsiteber @userid,@password,@status;", dbparamlist);
-            switch (userRows.Rows.Count)
+            mainRows = database.checkSelectSql("mssql", "sysstring", "exec web.loginsiteber @userid,@password,@status;", dbparamlist);
+            switch (mainRows.Rows.Count)
             {
                 case 0:
                     return new loginModels() { status = "nodata" };
             }
-            datetime datetime = new datetime();
-            string newid = userRows.Rows[0]["newid"].ToString().TrimEnd(), name = userRows.Rows[0]["username"].ToString().TrimEnd(), longitude = string.IsNullOrWhiteSpace(loginData.longitude) ? "0.0" : loginData.longitude, latitude = string.IsNullOrWhiteSpace(loginData.latitude) ? "0.0" : loginData.latitude, cuname = Dns.GetHostEntry(cuurip).HostName.IndexOf('.') == -1 ? Dns.GetHostEntry(cuurip).HostName : Dns.GetHostEntry(cuurip).HostName.Split('.')[0], date = datetime.sqldate("mssql", "sysstring"), time = datetime.sqltime("mssql", "sysstring");
-            switch (userRows.Rows[0]["isused"].ToString().TrimEnd())
+            switch (mainRows.Rows[0]["isused"].ToString().TrimEnd())
             {
                 case "1":
+                    string longitude = string.IsNullOrWhiteSpace(loginData.longitude) ? "0.0" : loginData.longitude, latitude = string.IsNullOrWhiteSpace(loginData.latitude) ? "0.0" : loginData.latitude, cuname = Dns.GetHostEntry(cuurip).HostName.IndexOf('.') == -1 ? Dns.GetHostEntry(cuurip).HostName : Dns.GetHostEntry(cuurip).HostName.Split('.')[0];
                     information information = new information();
-                    userRows.Clear();
+                    dbparamlist.Clear();
+                    DataTable subRows = new DataTable();
+                    dbparamlist.Add(new dbparam("@newid", mainRows.Rows[0]["newid"].ToString().TrimEnd()));
                     dbparamlist.Add(new dbparam("@externip", cuurip));
-                    userRows = database.checkSelectSql("mssql", "sysstring", "exec web.checksitelog @userid,@password,@externip,@status;", dbparamlist);
-                    switch (userRows.Rows.Count)
+                    dbparamlist.Add(new dbparam("@longitude", longitude));
+                    dbparamlist.Add(new dbparam("@latitude", latitude));
+                    dbparamlist.Add(new dbparam("@hostname", cuname));
+                    dbparamlist.Add(new dbparam("@browser", information.browser(userAgent)));
+                    dbparamlist.Add(new dbparam("@os", information.osystem(userAgent)));
+                    subRows = database.checkSelectSql("mssql", "sysstring", "exec web.checksitelog @userid,@password,@externip,@status;", dbparamlist);
+                    switch (subRows.Rows.Count)
                     {
                         case 0:
-                            dbparamlist.Clear();
-                            dbparamlist.Add(new dbparam("@newid", newid));
-                            dbparamlist.Add(new dbparam("@externip", cuurip));
-                            dbparamlist.Add(new dbparam("@longitude", longitude));
-                            dbparamlist.Add(new dbparam("@latitude", latitude));
-                            dbparamlist.Add(new dbparam("@hostname", cuname));
-                            dbparamlist.Add(new dbparam("@browser", information.browser(userAgent)));
-                            dbparamlist.Add(new dbparam("@os", information.osystem(userAgent)));
-                            dbparamlist.Add(new dbparam("@indate", date));
-                            dbparamlist.Add(new dbparam("@intime", time));
-                            dbparamlist.Add(new dbparam("@islogin", "1"));
-                            if (database.checkActiveSql("mssql", "sysstring", "insert into web.sitelog (newid,externip,longitude,latitude,hostname,browser,os,indate,intime,islogin) values (@newid,@externip,@longitude,@latitude,@hostname,@browser,@os,@indate,@intime,@islogin);", dbparamlist) != "istrue")
-                            {
-                                return new loginModels() { status = "error" };
-                            }
-                            return new loginModels() { newid = newid, name = name.Substring(0, 1), allname = name, status = "istrue" };
-                    }
-                    if (userRows.Rows[0]["isused"].ToString().TrimEnd() == "1" && userRows.Rows[0]["islogin"].ToString().TrimEnd() == "1")
-                    {
-                        dbparamlist.Clear();
-                        dbparamlist.Add(new dbparam("@longitude", longitude));
-                        dbparamlist.Add(new dbparam("@latitude", latitude));
-                        dbparamlist.Add(new dbparam("@browser", information.browser(userAgent)));
-                        dbparamlist.Add(new dbparam("@os", information.osystem(userAgent)));
-                        dbparamlist.Add(new dbparam("@indate", date));
-                        dbparamlist.Add(new dbparam("@intime", time));
-                        dbparamlist.Add(new dbparam("@newid", newid));
-                        dbparamlist.Add(new dbparam("@externip", cuurip));
-                        dbparamlist.Add(new dbparam("@islogin", "1"));
-                        if (database.checkActiveSql("mssql", "sysstring", "update web.sitelog set longitude = @longitude,latitude = @latitude,browser = @browser,os = @os,indate = @indate,intime = @intime where newid = @newid and externip = @externip and islogin = @islogin;", dbparamlist) != "istrue")
-                        {
-                            return new loginModels() { status = "error" };
-                        }
-                        return new loginModels() { newid = newid, name = name.Substring(0, 1), allname = name, status = "istrue" };
+                            return new loginModels() { newid = mainRows.Rows[0]["newid"].ToString().TrimEnd(), name = mainRows.Rows[0]["username"].ToString().TrimEnd().Substring(0, 1), allname = mainRows.Rows[0]["username"].ToString().TrimEnd(), status = "istrue" };
                     }
                     break;
             }
