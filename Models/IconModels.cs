@@ -45,7 +45,7 @@ namespace userinfoApi.Models
                 dbparamlist.Add(new dbparam("@value", item["value"].ToString().TrimEnd()));
                 dbparamlist.Add(new dbparam("@icon", item["icon"].ToString().TrimEnd()));
                 dbparamlist.Add(new dbparam("@inoper", iIconData.newid.TrimEnd()));
-                if (database.checkActiveSql("mssql", "sysstring", "exec web.checkiconform @value,@padding,@icon,@inoper;", dbparamlist) != "istrue")
+                if (database.checkActiveSql("mssql", "sysstring", "exec web.checkitemform @value,@padding,@icon,@inoper;", dbparamlist) != "istrue")
                 {
                     return new statusModels() { status = "error" };
                 }
