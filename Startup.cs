@@ -38,6 +38,8 @@ namespace userinfoApi
                     builder => builder.WithOrigins(items[0], items[1], items[2], items[3], items[4]).AllowAnyHeader().WithMethods("POST"));
                 options.AddPolicy("Icon",
                     builder => builder.WithOrigins(items[0], items[1], items[2], items[3], items[4]).AllowAnyHeader().WithMethods("POST"));
+                options.AddPolicy("Files",
+                    builder => builder.WithOrigins(items[0], items[1], items[2], items[3], items[4]).AllowAnyHeader().WithMethods("POST"));
             });
             services.AddControllers();
         }
