@@ -7,6 +7,16 @@ namespace userinfoApi.Models
 {
     public class LoginClass
     {
+        public sOptonModels GetSearchModels(userData userData, string cuurip)
+        {
+            List<Dictionary<string, object>> items = new List<Dictionary<string, object>>();
+            foreach (DataRow dr in new database().checkSelectSql("mssql", "sysstring", "exec web.searchformname;", new List<dbparam>()).Rows)
+            {
+                items.Add(new Dictionary<string, object>() { { "optionPadding", false }, { "value", dr["value"].ToString().TrimEnd() } });
+            }
+            return new sOptonModels() { items = items };
+        }
+
         public userModels GetUserModels(userData userData, string cuurip)
         {
             switch (string.IsNullOrWhiteSpace(userData.userid))

@@ -131,4 +131,10 @@ namespace userinfoApi.Models
         public List<Dictionary<string, object>> qaitems { get; set; }
         public string newid { get; set; }
     }
+
+    public class sOptonModels
+    {
+        [Required]
+        public List<Dictionary<string, object>> items { get; set; }
+    }
 }
