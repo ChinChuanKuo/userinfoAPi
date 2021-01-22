@@ -124,6 +124,22 @@ namespace userinfoApi.Models
             return new itemsModels() { showItem = true, items = items };
         }
 
+        public statusModels GetAddCordModels(otherData otherData, string cuurip)
+        {
+            datetime datetime = new datetime();
+            string stdate = datetime.sqldate("mssql", "sysstring"), sttime = datetime.sqltime("mssql", "sysstring");
+            List<dbparam> dbparamlist = new List<dbparam>();
+            dbparamlist.Add(new dbparam("@value", otherData.values.TrimEnd()));
+            dbparamlist.Add(new dbparam("@inoper", otherData.userid.TrimEnd()));
+            dbparamlist.Add(new dbparam("@stdate", stdate));
+            dbparamlist.Add(new dbparam("@sttime", sttime));
+            if (new database().checkActiveSql("mssql", "sysstring", "exec web.insertrecordform @value,@inoper,@stdate,@sttime;", dbparamlist) != "istrue")
+            {
+                return new statusModels() { status = "error" };
+            }
+            return new statusModels() { status = "istrue" };
+        }
+
         public itemsModels GetBadgeModels(userData userData, string cuurip)
         {
             DataTable mainRows = new DataTable();

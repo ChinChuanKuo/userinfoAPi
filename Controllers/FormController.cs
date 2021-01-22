@@ -50,6 +50,14 @@ namespace userinfoApi.Controllers
         }
 
         [HttpPost]
+        [Route("addCordData")]
+        public JsonResult addCordData([FromBody] otherData otherData)
+        {
+            string clientip = Request.HttpContext.Connection.RemoteIpAddress.ToString().TrimEnd() == "::1" ? "127.0.0.1" : Request.HttpContext.Connection.RemoteIpAddress.ToString().TrimEnd();
+            return Json(new FormClass().GetAddCordModels(otherData, clientip));
+        }
+
+        [HttpPost]
         [Route("badgeData")]
         public JsonResult badgeData([FromBody] userData userData)
         {
